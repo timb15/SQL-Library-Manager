@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
     genre: DataTypes.STRING,
     year: DataTypes.INTEGER
   }, {});
-
   Book.associate = function(models) {
     // associations can be defined here
   };
