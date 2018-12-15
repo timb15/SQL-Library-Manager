@@ -22,16 +22,16 @@ router.get('/new', function(req, res, next) {
 
 
 /*Update book details*/
-router.put('/:id', function(req, res, next) {
+router.post('/:id', function(req, res, next) {
   Book.findById(req.params.id).then(function(book) {
     return book.update(req.body);
   }).then(function(updatedBook) {
-    res.redirect('/books' + updatedBook.id);
+    res.redirect('/books/' + updatedBook.id);
   });
 });
 
 /*Delete book*/
-router.delete('/:id/delete', function(req, res, next) {
+router.post('/:id/delete', function(req, res, next) {
   Book.findById(req.params.id).then(function(book) {
     return book.destroy();
   }).then(function() {
