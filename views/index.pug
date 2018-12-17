@@ -2,7 +2,7 @@ extends layout.pug
 
 block content
   body
-    h1 Library Books
+    h1 #{title}
     include search-form
     if searched
         p
@@ -17,12 +17,21 @@ block content
           th Genre
           th Year
       tbody
-      each book in books
-        tr
-          td
-            a(href=`/books/${book.id}`) #{book.title}
-          td #{book.author}
-          td #{book.genre}
-          td #{book.year}
+        each book in books
+          tr
+            td
+              a(href=`/books/${book.id}`) #{book.title}
+            td #{book.author}
+            td #{book.genre}
+            td #{book.year}
+        - var n = 0;
+        h2 Page
+        P
+          while n < (count/7)
+            if query
+              a.page(href=`/books/${route}?offset=${n * 7}&query=${query}`)= n++ + 1
+            else
+              a.page(href=`/books/${route}?offset=${n * 7}`)= n++ + 1
+      
       
       

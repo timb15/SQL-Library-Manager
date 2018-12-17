@@ -1,14 +1,36 @@
-var express = require('express');
-var router = express.Router();
-var Book = require('../models').Book;
-var Sequelize = require('sequelize');
-var Op = Sequelize.Op;
+const express = require('express');
+const router = express.Router();
+const Book = require('../models').Book;
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  Book.findAll({order: [['title', 'ASC']]}).then(function(books) {
+  Book.findAndCountAll({order: [['title', 'ASC']], limit: 7}).then(function(books) {
     if(books) {
-      res.render('index', {books}); 
+      res.render('index', {
+        books: books.rows, 
+        count: books.count, 
+        route: 'page', 
+        title: 'All Books'}); 
+    }else {
+      res.send(404, "Page Not Found!");
+    }
+  }).catch(function(err) {
+      res.send(500);
+  });
+});
+
+//Display results from clicking pagination link
+router.get('/page', function(req, res, next) {
+  const offset = req.query.offset;
+  Book.findAndCountAll({order: [['title', 'ASC']], offset: offset, limit: 7}).then(function(books) {
+    if(books) {
+      res.render('index', {
+        books: books.rows, 
+        count: books.count, 
+        route: 'page', 
+        title: 'All Books'}); 
     }else {
       res.send(404, "Page Not Found!");
     }
@@ -19,10 +41,10 @@ router.get('/', function(req, res, next) {
 
 //Display list of books based on search query
 router.get('/search', function (req, res, next) {
-  var query = req.query.query;
-  var searched = true; //used to add home link to search results
+  const query = req.query.query;
+  const searched = true; //used to add home link to search results
 
-  Book.findAll({
+  Book.findAndCountAll({
     where: {
       [Op.or]: [
         {
@@ -44,9 +66,63 @@ router.get('/search', function (req, res, next) {
       ]
     },  
     order: [['title', 'ASC']],
+    limit: 7
   }).then(function(books) {
     if(books) {
-      res.render('index', {books, searched});
+      res.render('index', {
+        books: books.rows, 
+        count: books.count, 
+        searched, 
+        route: 'searchpage',
+        title: `Search Results for "${query}"`, 
+        query});
+    }else {
+      res.send(404, "Page Not Found!");
+    }
+  }).catch(function(err) {
+      res.send(500);
+  });
+});
+
+//Display a page of search results
+router.get('/searchpage', function (req, res, next) {
+  const query = req.query.query;
+  const offset = req.query.offset;
+  const searched = true; //used to add home link to search results
+
+  Book.findAndCountAll({
+    where: {
+      [Op.or]: [
+        {
+        title: { 
+          [Op.like]: `%${query}%`}
+        },
+        {
+        author:{ 
+          [Op.like]: `%${query}%`}
+        },
+        {
+        genre: { 
+          [Op.like]:`%${query}%`}
+        },
+        {
+        year: { 
+          [Op.like]:`%${query}%`}
+        }
+      ]
+    },  
+    order: [['title', 'ASC']],
+    offset: offset,
+    limit: 7
+  }).then(function(books) {
+    if(books) {
+      res.render('index', {
+        books: books.rows, 
+        count: books.count, 
+        searched, 
+        route: 'searchpage',
+        title: `Search Results for "${query}"`, 
+        query});
     }else {
       res.send(404, "Page Not Found!");
     }
@@ -92,7 +168,7 @@ router.post('/:id', function(req, res, next) {
       res.redirect(`/books/${book.id}`);
   }).catch(function(err) {
     if (err.name === "SequelizeValidationError") {
-      var book = req.body;
+      const book = req.body;
       book.id = req.params.id;
 
       res.render('book-details', {book, errors: err.errors});;

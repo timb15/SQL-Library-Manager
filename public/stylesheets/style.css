@@ -1,22 +1,23 @@
 body {
+  background: #d9ddeb;
   padding: 10px 50px 50px;
   font: 18px "Garamond", serif;
 }
 
 a {
-  color: #019875;
+  color: #011857;
   text-decoration: none;
   font-weight: bold;
   transition: 0.4s;
 }
 
   a:hover {
-    color: black;
+    color: #03a0fc;
   }
 
 a.button, input[type=submit] {
   color: white;
-  background: #019875;
+  background: #011857;
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
   padding: 10px 14px 12px;
   font-size: 14px;
@@ -34,7 +35,7 @@ input[type=submit] {
 }
 
   a.button:hover, input[type=submit]:hover {
-    background-color: #01b189;
+    background-color: #03a0fc;
   }
 
 p {
@@ -48,8 +49,13 @@ ul {
   line-height: 1.3em;
 }
 
+h1{
+  border-bottom: 2px solid #D8B493;
+  text-shadow: 2px 2px #D8B493;
+}
+
 h2 {
-  border-top: 2px solid #e7e7e7;
+  border-top: 2px solid #D8B493;
   padding-top: 20px;
 }
 
@@ -64,7 +70,7 @@ tr {
 }
 
 tr:nth-child(2n) {
-  background: #E7E7E7;
+  background: rgb(248, 243, 194);
 }
 
 td {
@@ -94,6 +100,7 @@ input[type=text] {
 
 .error {
   color: rgb(236, 15, 15);
+  border-top: none;
 }
 
 #search-btn {
@@ -103,4 +110,20 @@ input[type=text] {
 
 #search-input {
   margin-left: 0;
+}
+
+a.page {
+  background: #011857;
+  color: white;
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 5px 5px 5px;
+  font-size: 14px;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-right: 5px;
+  text-size-adjust: 10px;
+}
+
+a.page:hover{
+  background: #03a0fc
 }
