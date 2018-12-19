@@ -1,12 +1,12 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
 
 
-var routes = require('./routes/index');
-var books = require('./routes/books');
+const routes = require('./routes/index');
+const books = require('./routes/books');
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
