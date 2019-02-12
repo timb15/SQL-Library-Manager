@@ -12,7 +12,7 @@ An example application to manage a book database for a library. Books can be add
 
 ## Running the Project
 1. Clone the project files.
-2. Navigate to the *__TechDegree-Project-8__* directory in a terminal.
+2. Navigate to the project folder in a terminal.
 3. Type *__npm install__* to install project dependencies.
 4. Type *__npm start__* to run the app.
 5. Open a browser and navigate to localhost:3000 to view use the app.
