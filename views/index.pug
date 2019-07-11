@@ -24,14 +24,13 @@ block content
             td #{book.author}
             td #{book.genre}
             td #{book.year}
-        - var n = 0;
-        h2 Page
-        P
-          while n < (count/7)
-            if query
-              a.page(href=`/books/${route}?offset=${n * 7}&query=${query}`)= n++ + 1
-            else
-              a.page(href=`/books/${route}?offset=${n * 7}`)= n++ + 1
+    P
+    - var n = 0;
+      while n < (count/7)
+        if query
+          a.page(href=`/books/${route}?offset=${n * 7}&query=${query}`)= n++ + 1
+        else
+          a.page(href=`/books/${route}?offset=${n * 7}`)= n++ + 1
       
       
       
